@@ -16,6 +16,9 @@ type Peer struct {
 var peersList map[string]Peer
 var isStarted = false
 
+// One day
+const peerExpireTime = 24 * 60 * 60
+
 func main() {
 	peersList = make(map[string]Peer)
 
@@ -67,7 +70,7 @@ func addPeerHandler(w http.ResponseWriter, r *http.Request) {
 	go func() {
 		for {
 			for k, peer := range peersList {
-				if peer.Timestamp+15 < time.Now().Unix() {
+				if peer.Timestamp+peerExpireTime < time.Now().Unix() {
 					delete(peersList, k)
 				}
 			}
