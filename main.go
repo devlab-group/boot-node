@@ -41,6 +41,7 @@ func addPeerHandler(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(""))
 		return
 	}
+	defer r.Body.Close()
 
 	address := r.RemoteAddr
 	pubKey := peerData["publicKey"]
