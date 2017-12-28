@@ -43,10 +43,10 @@ func addPeerHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer r.Body.Close()
 
-	address := r.RemoteAddr
+	address := peerData["address"]
 	pubKey := peerData["publicKey"]
 
-	if len(pubKey) == 0 {
+	if len(address) == 0 || len(pubKey) == 0 {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(""))
 		return
