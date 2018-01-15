@@ -108,10 +108,8 @@ func addPeerHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func getPeersHandler(w http.ResponseWriter, r *http.Request) {
-	var peerData map[string]string
-	decodeRequestBody(w, r, &peerData)
+	netId := r.FormValue("network")
 
-	netId := peerData["network"]
 	if ok := isNetworkSupported(netId); !ok {
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte("Unsupported network"))
